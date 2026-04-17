@@ -21,22 +21,26 @@ namespace ArtGallery.API
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            
 
-            builder.Services.AddControllers();
-            builder.Services.AddOpenApi();
-            builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddScoped<IArtistService, ArtistService>();
             builder.Services.AddScoped<IArtworkService, ArtworkService>();
             builder.Services.AddScoped<ICategoryService, CategoryService>();
             builder.Services.AddScoped<IExhibitionService, ExhibitionService>();
 
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
 
+            builder.Services.AddControllers();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddOpenApi();
+            
+       
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
-                app.MapOpenApi();
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
