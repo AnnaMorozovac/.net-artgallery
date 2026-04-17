@@ -19,6 +19,8 @@ namespace ArtGallery.API
 
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
+            builder.Services.AddAutoMapper(typeof(ArtGallery.BLL.Profiles.MappingProfile).Assembly);
+
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
@@ -29,7 +31,6 @@ namespace ArtGallery.API
 
             builder.Services.AddControllers();
 
-            builder.Services.AddAutoMapper(typeof(ArtGallery.BLL.Profiles.MappingProfile).Assembly);
             builder.Services.AddSwaggerGen();
             builder.Services.AddAuthorization();
 
