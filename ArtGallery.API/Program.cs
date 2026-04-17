@@ -1,5 +1,7 @@
 
 using ArtGallery.DAL;
+using ArtGallery.DAL.Repositories;
+using ArtistGallery.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace ArtGallery.API
@@ -15,15 +17,13 @@ namespace ArtGallery.API
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(connectionString));
 
-            // Add services to the container.
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
             builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.MapOpenApi();
