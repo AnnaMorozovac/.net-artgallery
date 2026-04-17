@@ -1,8 +1,10 @@
 
+using ArtGallery.BLL.Profiles;
 using ArtGallery.DAL;
 using ArtGallery.DAL.Repositories;
 using ArtistGallery.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ArtGallery.API
 {
@@ -18,9 +20,12 @@ namespace ArtGallery.API
                 options.UseSqlServer(connectionString));
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            
 
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+
 
             var app = builder.Build();
 
