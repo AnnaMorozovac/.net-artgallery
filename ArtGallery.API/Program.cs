@@ -5,6 +5,7 @@ using ArtGallery.DAL.Repositories;
 using ArtistGallery.DAL.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ArtGallery.BLL.Services;
 
 namespace ArtGallery.API
 {
@@ -25,6 +26,10 @@ namespace ArtGallery.API
             builder.Services.AddControllers();
             builder.Services.AddOpenApi();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
+            builder.Services.AddScoped<IArtistService, ArtistService>();
+            builder.Services.AddScoped<IArtworkService, ArtworkService>();
+            builder.Services.AddScoped<ICategoryService, CategoryService>();
+            builder.Services.AddScoped<IExhibitionService, ExhibitionService>();
 
 
             var app = builder.Build();
