@@ -22,19 +22,17 @@ namespace ArtGallery.API
 
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
-            builder.Services.AddScoped<IArtistService, ArtistService>();
-            builder.Services.AddScoped<IArtworkService, ArtworkService>();
-            builder.Services.AddScoped<ICategoryService, CategoryService>();
-            builder.Services.AddScoped<IExhibitionService, ExhibitionService>();
-
-            builder.Services.AddAutoMapper(typeof(MappingProfile));
+           builder.Services.AddScoped<IArtistService, ArtistService>();
+           builder.Services.AddScoped<IArtworkService, ArtworkService>();
+           builder.Services.AddScoped<ICategoryService, CategoryService>();
+           builder.Services.AddScoped<IExhibitionService, ExhibitionService>();
 
             builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
+
+            builder.Services.AddAutoMapper(typeof(ArtGallery.BLL.Profiles.MappingProfile).Assembly);
             builder.Services.AddSwaggerGen();
-            builder.Services.AddOpenApi();
-            
-       
+            builder.Services.AddAuthorization();
+
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
