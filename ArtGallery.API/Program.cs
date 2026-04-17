@@ -1,4 +1,7 @@
 
+using ArtGallery.DAL;
+using Microsoft.EntityFrameworkCore;
+
 namespace ArtGallery.API
 {
     public class Program
@@ -6,6 +9,11 @@ namespace ArtGallery.API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(connectionString));
 
             // Add services to the container.
 
