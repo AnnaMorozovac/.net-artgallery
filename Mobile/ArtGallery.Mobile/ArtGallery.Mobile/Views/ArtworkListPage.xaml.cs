@@ -2,9 +2,9 @@ using ArtGallery.Mobile.ViewModels;
 
 namespace ArtGallery.Mobile.Views;
 
-public partial class ArtistListPage : ContentPage
+public partial class ArtworkListPage : ContentPage
 {
-	public ArtistListPage(ArtistListViewModel viewModel)
+	public ArtworkListPage(ArtworkListViewModel viewModel)
 	{
 		InitializeComponent();
         BindingContext = viewModel;
