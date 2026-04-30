@@ -16,6 +16,8 @@ namespace ArtGallery.DAL
         public DbSet<Artwork> Artworks { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Exhibition> Exhibitions { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,6 +49,23 @@ namespace ArtGallery.DAL
             modelBuilder.Entity<Exhibition>(entety =>
             {
                 entety.Property(e => e.Name).IsRequired().HasMaxLength(200);
+            });
+
+            modelBuilder.Entity<Favorite>()
+            .HasIndex(f => new { f.UserId, f.ArtworkId })
+            .IsUnique();
+
+            modelBuilder.Entity<Favorite>(entity =>
+            {
+                entity.HasOne(f => f.User)
+                      .WithMany()
+                      .HasForeignKey(f => f.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(f => f.Artwork)
+                      .WithMany() 
+                      .HasForeignKey(f => f.ArtworkId)
+                      .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }
