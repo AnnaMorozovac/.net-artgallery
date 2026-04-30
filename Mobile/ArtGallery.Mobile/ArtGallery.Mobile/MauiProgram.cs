@@ -36,11 +36,15 @@ namespace ArtGallery.Mobile
             builder.Services.AddTransient<ArtworkListViewModel>();
             builder.Services.AddTransient<CategoryListViewModel>();
             builder.Services.AddTransient<ExhibitionListViewModel>();
+            builder.Services.AddTransient<LoginListViewModel>();
+            builder.Services.AddTransient<UserListViewModel>();
 
             builder.Services.AddTransient<ArtistListPage>();
             builder.Services.AddTransient<ArtworkListPage>();
             builder.Services.AddTransient<CategoryListPage>();
             builder.Services.AddTransient<ExhibitionListPage>();
+            builder.Services.AddTransient<LoginListPage>();
+            builder.Services.AddTransient<UserListPage>();
 
 
 #if DEBUG
