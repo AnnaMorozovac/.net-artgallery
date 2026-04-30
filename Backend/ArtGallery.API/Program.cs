@@ -28,6 +28,8 @@ namespace ArtGallery.API
            builder.Services.AddScoped<IArtworkService, ArtworkService>();
            builder.Services.AddScoped<ICategoryService, CategoryService>();
            builder.Services.AddScoped<IExhibitionService, ExhibitionService>();
+           builder.Services.AddScoped<IUserService, UserService>();
+           builder.Services.AddScoped<IFavoriteService, FavoriteService>();
 
             builder.Services.AddControllers();
 
