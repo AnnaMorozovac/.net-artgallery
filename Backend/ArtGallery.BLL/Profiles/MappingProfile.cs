@@ -23,5 +23,11 @@ public class MappingProfile : Profile
         CreateMap<Exhibition, ExhibitionDto>();
         CreateMap<CreateExhibitionDto, Exhibition>();
         CreateMap<UpdateExhibitionDto, Exhibition>();
+
+        CreateMap<User, UserDto>();       
+        CreateMap<CreateUserDto, User>(); 
+        CreateMap<UpdateUserDto, User>(); 
+
+        CreateMap<Favorite, FavoriteDto>();
     }
 }
