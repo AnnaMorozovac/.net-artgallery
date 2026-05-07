@@ -95,11 +95,29 @@ public class ApiService : IApiService
         }
     }
 
-    public async Task<bool> CreateArtworkAsync(ArtworkModel artwork)
+    public async Task<bool> CreateArtworkAsync(ArtworkModel artwork, FileResult? imageFile)
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync("api/artworks", artwork);
+            var content = new MultipartFormDataContent();
+
+            content.Add(new StringContent(artwork.Title ?? ""), "Title");
+            content.Add(new StringContent(artwork.Description ?? ""), "Description");
+            content.Add(new StringContent(artwork.Price.ToString()), "Price");
+            content.Add(new StringContent(artwork.ArtistId.ToString()), "ArtistId");
+            content.Add(new StringContent(artwork.CategoryId.ToString()), "CategoryId");
+
+            if (imageFile != null)
+            {
+                var stream = await imageFile.OpenReadAsync();
+                var fileContent = new StreamContent(stream);
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(imageFile.ContentType);
+
+                content.Add(fileContent, "imageFile", imageFile.FileName);
+            }
+
+            var response = await _httpClient.PostAsync("api/artworks", content);
+
             return response.IsSuccessStatusCode;
         }
         catch (HttpRequestException)

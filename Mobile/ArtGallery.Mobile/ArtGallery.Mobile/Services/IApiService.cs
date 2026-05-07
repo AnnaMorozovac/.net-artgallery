@@ -16,7 +16,7 @@ public interface IApiService
 
     Task<IEnumerable<ArtworkModel>> GetArtworksAsync();
     Task<ArtworkModel?> GetArtworkByIdAsync(int id);
-    Task<bool> CreateArtworkAsync(ArtworkModel artwork);
+    Task<bool> CreateArtworkAsync(ArtworkModel artwork, FileResult? imageFile);
     Task<bool> UpdateArtworkAsync(ArtworkModel artwork);
     Task<bool> DeleteArtworkAsync(int id);
 
