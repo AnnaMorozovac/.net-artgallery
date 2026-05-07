@@ -9,10 +9,11 @@ namespace ArtGallery.API.Controllers;
 public class ArtworksController : ControllerBase
 {
     private readonly IArtworkService _service;
-
-    public ArtworksController(IArtworkService service)
+    private readonly IBlobService _blobService;
+    public ArtworksController(IArtworkService service, IBlobService blobService)
     {
         _service = service;
+        _blobService = blobService;
     }
 
     [HttpGet]
@@ -26,8 +27,25 @@ public class ArtworksController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<ArtworkDto>> Create(CreateArtworkDto dto)
+    public async Task<ActionResult<ArtworkDto>> Create([FromForm] CreateArtworkDto dto, IFormFile? imageFile)
     {
+        if (imageFile != null && imageFile.Length > 0)
+        {
+            try
+            {
+                using var stream = imageFile.OpenReadStream();
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+
+                string imageUrl = await _blobService.UploadFileAsync(stream, fileName, imageFile.ContentType);
+
+                dto.ImageUrl = imageUrl;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Azure Error: {ex.Message}");
+            }
+        }
+
         var result = await _service.CreateAsync(dto);
         return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
     }

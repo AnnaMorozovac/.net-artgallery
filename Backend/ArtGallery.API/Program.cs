@@ -35,6 +35,7 @@ namespace ArtGallery.API
 
             builder.Services.AddSwaggerGen();
             builder.Services.AddAuthorization();
+            builder.Services.AddScoped<IBlobService, BlobService>();
 
             var app = builder.Build();
 
